@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista dos piores filmes</title>
+
+    <!-- CSS e Javascript do Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+      <h1 class="mb-2 text-gray-800" th:text="${movie.titlePt}"></h1>
+      <h4 th:text="'Titulo Original: ' + ${movie.titleEn}"></h4>
+
+        <div class="row">
+            <ul class="list-group list-group-horizontal list-group-flush">
+                <li class="list-group-item">Director(s):</li>
+                <li class="list-group-item" th:each="director : ${movie.directors}" th:text="${director.name}"></li>
+            </ul>
+        </div>
+
+        <div class="row mt-4">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Cast:</li>
+                <li class="list-group-item" th:each="cast : ${movie.cast}" th:text="${cast.nameActor} + '('+${cast.nameCharacter} +')'"></li>
+            </ul>
+        </div>
+
+        <div class="row mt-4">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Reviews:</li>
+                <li class="list-group-item" th:each="review : ${movie.review}">
+                    <h4 th:text="${review.rating}"></h4>
+                    <h3 th:text="${review.title}"></h3>
+                    <h4 th:text="${review.content}"></h4>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

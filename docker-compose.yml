@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: crawler-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: movies
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: admin
+    ports:
+      - 3306:3306
+    volumes:
+      - /database/data/mysql
+    networks:
+      - overmind-net
+  app:
+    build: .
+    container_name: crawler
+    environment:
+      SPRING_DATABASE_URI: jdbc:mysql://crawler-db:3306/movies?allowPublicKeyRetrieval=true&useSSL=false
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    networks:
+      - overmind-net
+networks:
+  overmind-net:
+    name: db-net
+    driver: bridge
